@@ -1,16 +1,44 @@
-@import "tailwindcss";
+
+
+@import 'tailwindcss/preflight';
+@tailwind utilities;
+@tailwind base;
+@tailwind components;
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+} */
+@theme {
+  
+  --breakpoint-sm: 40rem;    
+  --breakpoint-md: 48rem;    
+  --breakpoint-lg: 64rem;    
+  --breakpoint-xl: 80rem;    
+  --breakpoint-2xl: 96rem;   
+
+  
+  --color-medical-teal: #0d9488;
+  --color-medical-dark: #0f172a;
+
+  --color-tile: #222;
+  
+  
+  --shadow-tile: 0 10px 15px -3px color-mix(in oklab, var(--color-tile) 10%, transparent), 
+                 0 4px 6px -4px color-mix(in oklab, var(--color-tile) 5%, transparent);
+
 }
+
+
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -20,7 +48,7 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+
   font-family: Arial, Helvetica, sans-serif;
+  
 }

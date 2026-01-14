@@ -9,6 +9,49 @@
   "Signup": {
     "title": "Create your Account",
     "step1": "Personal Information"
+  },
+  "Navigation": {
+    "about": "About",
+    "contact": "Contact",
+    "services": "Our Services",
+    "getStarted": "Get Started"
+  },
+  "About": {
+    "title": "We Care About Your Health",
+    "subtitle": "Hi-Care platform is your trusted digital destination for integrated healthcare.",
+    "mission": "Our Mission",
+    "missionText": "To provide easy and fast access to healthcare services and medical insurance for all community members using the latest technologies.",
+    "vision": "Our Vision",
+    "visionText": "To be the leading platform in the Middle East connecting patients with top doctors and insurance providers in one place.",
+    "stats": {
+      "doctors": "+500 Specialist Doctors",
+      "users": "+50k Active Users",
+      "insurance": "15 Insurance Partners"
+    }
+  },
+  "Contact": {
+    "title": "Get in Touch",
+    "subtitle": "Our support team is always available to help you with any inquiry.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message",
+      "success": "Your message has been sent successfully!"
+    },
+    "info": {
+      "address": "Address",
+      "addressText": "90th St, Fifth Settlement, Cairo, Egypt",
+      "workingHours": "Working Hours",
+      "workingHoursText": "Sunday - Thursday (9 AM - 6 PM)"
+    }
+  },
+  "Footer": {
+   "developedWith": "Developed with",
+    "by": "by",
+    "allRightsReserved": "All rights reserved.",
+    "seif": "Seif Amr"
   }
 }
 

@@ -2,28 +2,28 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import '../globals.css';
+import Header from '@/components/Header'; 
+import Footer from '@/components/Footer';
+// import Footer from '@/components/Footer'; // Ensure path is correct
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: { locale: string }; // Next.js injects this from the [locale] folder name
+  params: Promise<{ locale: string }>; // Updated to Promise for Next.js 15
 }
+
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-  
-  // Base URL for your production site
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ; 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; 
 
   return {
-    // 1. Basic Metadata
     title: {
       template: `%s | ${t('title')}`,
       default: `${t('title')} | ${t('slogan')}`,
     },
     description: t('description'),
-    keywords: t('keywords'), // e.g., "medical, insurance, doctor, chat, health"
-    
-    // 2. OpenGraph (Facebook, WhatsApp, LinkedIn)
+    keywords: t('keywords'),
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       siteName: 'Hi-Care',
       images: [
         {
-          url: '/public/og-image.png', // Create a 1200x630 image of your logo
+          url: '/og-image.png', 
           width: 1200,
           height: 630,
           alt: 'Hi-Care Medical Platform',
@@ -40,16 +40,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       locale: locale === 'ar' ? 'ar_EG' : 'en_US',
       type: 'website',
     },
-
-    // 3. Twitter Card
     twitter: {
       card: 'summary_large_image',
-      title: t('title'),
-      description: t('description'),
-      images: ['/public/og-image.png'],
+      images: ['/og-image.png'], 
     },
-
-    // 4. Multi-language Alternates (Crucial for SEO)
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {
@@ -57,39 +51,39 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
         'ar-EG': `${baseUrl}/ar`,
       },
     },
-
-    // 5. Robots & Performance
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
   };
 }
-export default async function LocaleLayout({ children, params }: LayoutProps) {
-  // Await the params (required in newer Next.js versions)
+
+export default async function LocaleLayout({ 
+  children, 
+  params 
+}: { 
+  children: React.ReactNode; 
+  params: Promise<{ locale: string }> 
+}) {
+  
   const { locale } = await params;
 
-  // Validate that the incoming locale is supported
-  const locales = ['en', 'ar'];
-  if (!locales.includes(locale)) {
-    notFound();
-  }
-
+  
   const messages = await getMessages();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr';
 
-  return (
-    <html lang={locale} dir={direction}>
-      <body className="antialiased">
+ return (
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      {/* min-h-screen: Ensures the body is at least as tall as the screen
+          flex flex-col: Allows children to behave as flex items
+      */}
+      <body className="min-h-screen flex flex-col bg-white">
         <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
+          <Header />
+          
+          {/* flex-grow: This is the magic. It tells the main section to 
+              expand and fill all available space, pushing the footer down.
+          */}
+          <main className="grow pt-[5rem]">
+            {children}
+          </main>
+
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
