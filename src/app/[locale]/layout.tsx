@@ -79,7 +79,7 @@ export default async function LocaleLayout({
           {/* flex-grow: This is the magic. It tells the main section to 
               expand and fill all available space, pushing the footer down.
           */}
-          <main className="grow pt-[5rem]">
+          <main className="grow pt-[5rem] flex flex-col">
             {children}
           </main>
 

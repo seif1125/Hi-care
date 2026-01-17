@@ -6,6 +6,12 @@
     "description": "Hi-Care is a leading digital health platform offering medical insurance, instant doctor chats, and easy appointment booking.",
     "keywords": "medical insurance, online doctor, telehealth, health coverage, Hi-Care"
   },
+  "Welcome":{
+    "title": "Your Health, Our Priority",
+    "description": "Experience a new era of personalized healthcare. Connect with top doctors, manage your medical records, and take control of your wellness journey today",
+    "readMore": "Read more",
+    "getStarted": "Get Started Now"
+  },
   "Signup": {
     "title": "Create your Account",
     "step1": "Personal Information"
