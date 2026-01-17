@@ -14,7 +14,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   
   // Design Constants (Extracted for readability)
-  const headerStyles = "fixed top-0 left-0 w-full h-[5rem] flex justify-between items-center z-50 bg-white/90 backdrop-blur-md px-6 md:px-12 shadow-lg shadow-tile transition-all border-0 px-[0.25rem] py-[0.375rem]";
+  const headerStyles = "fixed z-1000 bg-[white] top-0 left-0 w-full h-[5rem] flex justify-between items-center z-50 bg-white/90 backdrop-blur-md px-6 md:px-12 shadow-lg shadow-tile transition-all border-0 px-[0.25rem] py-[0.375rem]";
   const navLinkStyles = "text-slate-600 mx-[0.5rem] hover:text-medical-teal cursor-pointer font-medium transition-colors";
   const mobileLinkStyles = "text-2xl text-center w-full font-bold text-slate-800 border-b border-b-medical-teal py-2 cursor-pointer hover:text-medical-teal transition-all";
 
