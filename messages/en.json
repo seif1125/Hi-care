@@ -12,10 +12,6 @@
     "readMore": "Read more",
     "getStarted": "Get Started Now"
   },
-  "Signup": {
-    "title": "Create your Account",
-    "step1": "Personal Information"
-  },
   "Navigation": {
     "about": "About",
     "contact": "Contact",
@@ -64,6 +60,21 @@
       "workingHours": "Working Hours",
       "workingHoursText": "Sunday - Thursday (9 AM - 6 PM)"
     },
+    "Signup": {
+  "personalInfo": "Personal Information",
+  "insurancePlan": "Insurance Plan",
+  "finalConsent": "Final Consent",
+  "step": "Step {current} of {total}",
+  "namePlaceholder": "Full Name",
+  "emailPlaceholder": "Email Address",
+  "continue": "Continue",
+  "back": "Back",
+  "insuranceSubtitle": "Choose your provider to filter doctor searches later.",
+  "termsTitle": "Privacy & Terms",
+  "termsText": "By clicking accept, you authorize Hi-Care to share your insurance details with medical providers to facilitate appointment booking.",
+  "agree": "I agree to the terms of service and data processing policy.",
+  "complete": "Complete Registration"
+},
   "Footer": {
    "developedWith": "Developed with",
     "by": "by",
