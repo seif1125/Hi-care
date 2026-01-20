@@ -62,3 +62,27 @@ export interface PersonalInfoStepProps {
   onUpdate: (name: string, email: string) => void;
   onNext: () => void;
 }
+export interface Doctor {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  specialty_en: string;
+  specialty_ar: string;
+  insurance_ids: string[];
+  image: string;
+  can_chat: boolean;
+  can_reserve: boolean;
+  availability: string[];
+}
+
+export interface Appointment {
+  id: string;
+  doctorId: string;
+  doctorName: string;
+  time: string;
+  type: 'consultation';
+}
+
+export interface DoctorCardProps {
+  doctor: Doctor;
+}

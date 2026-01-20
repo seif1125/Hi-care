@@ -35,3 +35,9 @@ export const SOCIAL_LINKS = [
   { id: 'instagram', Icon: Instagram, color: "#E4405F", href: "#" },
   { id: 'linkedin', Icon: Linkedin, color: "#0A66C2", href: "#" },
 ] as const;
+
+export const CATEGORIES = [
+  { id: "all", en: "All", ar: "الكل" },
+  { id: "Cardiology", en: "Cardiology", ar: "القلب" },
+  { id: "Ophthalmology", en: "Ophthalmology", ar: "الرمد" }
+];
