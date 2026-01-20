@@ -12,10 +12,6 @@
     "readMore": "Read more",
     "getStarted": "Get Started Now"
   },
-  "Signup": {
-    "title": "Create your Account",
-    "step1": "Personal Information"
-  },
   "Navigation": {
     "about": "About",
     "contact": "Contact",
@@ -24,35 +20,61 @@
   },
   "About": {
     "title": "We Care About Your Health",
-    "subtitle": "Hi-Care platform is your trusted digital destination for integrated healthcare.",
+    "subtitle": "Hi-Care is your trusted digital destination for integrated healthcare.",
     "mission": "Our Mission",
-    "missionText": "To provide easy and fast access to healthcare services and medical insurance for all community members using the latest technologies.",
+    "missionText": "To provide fast and easy access to healthcare and medical insurance for everyone using the latest technology.",
     "vision": "Our Vision",
-    "visionText": "To be the leading platform in the Middle East connecting patients with top doctors and insurance providers in one place.",
+    "visionText": "To be the leading platform in the Middle East connecting patients with top doctors and insurance providers.",
+    "featuresTitle": "Why Choose Hi-Care?",
+    "testimonialsTitle": "What Our Clients Say",
+    "features": {
+      "doctors": "Specialized Doctors",
+      "doctorsText": "A selection of the best doctors across all medical specialties.",
+      "insurance": "Insurance Sync",
+      "insuranceText": "Manage your medical insurance approvals digitally and effortlessly.",
+      "support": "Continuous Support",
+      "supportText": "A dedicated support team to assist you anytime, 24/7."
+    },
     "stats": {
-      "doctors": "+500 Specialist Doctors",
-      "users": "+50k Active Users",
-      "insurance": "15 Insurance Partners"
+      "doctors": "+500 Specialized Doctors",
+      "users": "+50k Users",
+      "insurance": "15 Insurance Companies"
     }
   },
-  "Contact": {
-    "title": "Get in Touch",
-    "subtitle": "Our support team is always available to help you with any inquiry.",
-    "form": {
-      "name": "Full Name",
-      "email": "Email Address",
-      "subject": "Subject",
-      "message": "Your Message",
-      "submit": "Send Message",
-      "success": "Your message has been sent successfully!"
-    },
+"Contact": {
+  "title": "Contact Us",
+  "subtitle": "We are here to help and answer your medical inquiries at any time.",
+  "infoTitle": "Contact Information",
+  "branchesTitle": "Our Branches",
+  "socialTitle": "Follow Us on Social Media",
+  "hq": "Headquarters",
+  "address": "123 Healthcare St., Cairo, Egypt",
+  "phone": "Phone",
+  "email": "Email",
+  "whatsapp": "WhatsApp",
+  "viewMap": "View Location on Map"
+},
     "info": {
       "address": "Address",
       "addressText": "90th St, Fifth Settlement, Cairo, Egypt",
       "workingHours": "Working Hours",
       "workingHoursText": "Sunday - Thursday (9 AM - 6 PM)"
-    }
-  },
+    },
+    "Signup": {
+  "personalInfo": "Personal Information",
+  "insurancePlan": "Insurance Plan",
+  "finalConsent": "Final Consent",
+  "step": "Step {current} of {total}",
+  "namePlaceholder": "Full Name",
+  "emailPlaceholder": "Email Address",
+  "continue": "Continue",
+  "back": "Back",
+  "insuranceSubtitle": "Choose your provider to filter doctor searches later.",
+  "termsTitle": "Privacy & Terms",
+  "termsText": "By clicking accept, you authorize Hi-Care to share your insurance details with medical providers to facilitate appointment booking.",
+  "agree": "I agree to the terms of service and data processing policy.",
+  "complete": "Complete Registration"
+},
   "Footer": {
    "developedWith": "Developed with",
     "by": "by",
