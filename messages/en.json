@@ -75,6 +75,25 @@
   "agree": "I agree to the terms of service and data processing policy.",
   "complete": "Complete Registration"
 },
+"Dashboard": {
+    "welcome": "Welcome, {name}",
+    "searchPlaceholder": "Search for a doctor by name...",
+    "upcoming": "Upcoming Appointments",
+    "categories": "Medical Specialties",
+    "chatNow": "Instant Chat",
+    "book": "Book Appointment",
+    "confirm": "Confirm Booking",
+    "saveGoogle": "Book & Add to Google Calendar",
+    "success": "Appointment booked successfully!",
+    "insuranceVerified": "Verified Plan",
+    "selectTime": "Select Available Slot",
+    "noResults": "No doctors found matching your criteria.",
+    "confirmReservation": "Confirm Reservation",
+    "reserveAndGoogle": "Reserve & Sync to Google",
+    "resultsCount": "{count} Specialists",
+    "showingResults": "Showing",
+    "of": "of"  
+  },
   "Footer": {
    "developedWith": "Developed with",
     "by": "by",

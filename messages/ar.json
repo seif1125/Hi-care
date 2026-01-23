@@ -73,13 +73,22 @@
 "Dashboard": {
   "welcome": "مرحباً، {name}",
   "searchPlaceholder": "ابحث عن طبيب بالاسم...",
+  "insuranceVerified": "تم التحقق من التأمين",
   "upcoming": "المواعيد القادمة",
   "categories": "الفئات الطبية",
   "chatNow": "دردشة فورية",
   "book": "حجز موعد",
   "confirm": "تأكيد الحجز",
   "saveGoogle": "حجز وإضافة لتقويم جوجل",
-  "success": "تم حجز الموعد بنجاح!"
+  "success": "تم حجز الموعد بنجاح!",
+    "selectTime": "اختر فراغ متاح",
+    "noResults": "لم يتم العثور على أطباء يطابقون معايير البحث.",
+    "confirmReservation": "تأكيد الحجز",
+    "reserveAndGoogle": "حجز ودمج مع تقويم جوجل",
+    "resultsCount": "{count} متخصصين",
+    "showing": "عرض",
+    "of": "من"
+
 },
   "Footer": {
     "developedWith": "تم التطوير بـ",

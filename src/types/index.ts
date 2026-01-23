@@ -80,9 +80,17 @@ export interface Appointment {
   doctorId: string;
   doctorName: string;
   time: string;
-  type: 'consultation';
+  specialty: string;
+  userComment: string;
+  type: 'consultation' | 'follow-up'| 'emergency';
 }
 
 export interface DoctorCardProps {
   doctor: Doctor;
+  onBooking: (doctor: Doctor) => void;
+}
+export interface ModalProps {
+ doctor: Doctor; 
+ onClose: () => void; 
+  onReserve: (appointment: Appointment, withGoogle: boolean) => void
 }

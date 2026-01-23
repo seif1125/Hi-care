@@ -8,6 +8,16 @@ const withNextIntl = createNextIntlPlugin(
 
 const nextConfig: NextConfig = {
   /* other config options here */
+  images:{
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  }
 };
 
 export default withNextIntl(nextConfig);

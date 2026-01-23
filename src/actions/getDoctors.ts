@@ -10,7 +10,7 @@ export async function getDoctorsAction(): Promise<Doctor[]> {
   try {
     const res = await fetch(API_URL, {
       next: { 
-        revalidate: 604800, // 1 week cache
+        revalidate: 0, // 1 week cache
       },
     });
 

@@ -1,12 +1,12 @@
 "use client";
-import { DoctorCardProps } from "@/types";
+import { Doctor, DoctorCardProps } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 import { MessageCircle, Calendar, ShieldCheck, Star } from "lucide-react";
-import { div } from "framer-motion/client";
+import Image from "next/image";
 
 
 
-export default function DoctorCard({ doctor }: DoctorCardProps) {
+export default function DoctorCard({ doctor, onBooking }: DoctorCardProps) {
   const locale = useLocale();
   const t = useTranslations("Dashboard");
   const isRtl = locale === "ar";
@@ -15,49 +15,38 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
   const specialty = isRtl ? doctor.specialty_ar : doctor.specialty_en;
 
   return (
-    <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all group">
-      <div className="flex gap-4 mb-6">
-        <div className="relative">
-          <img 
-            src={doctor.image} 
-            alt={name} 
-            className="w-20 h-20 rounded-2xl object-cover bg-slate-50"
-          />
-          <div className="absolute -bottom-2 -right-2 bg-white shadow-sm rounded-lg px-2 py-1 flex items-center gap-1">
-            <Star size={12} className="fill-yellow-400 text-yellow-400" />
-            <span className="text-[0.7rem] font-bold">4.9</span>
+    <div className="bg-[#ffffff] rounded-[2.5rem] p-[1.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] border-[0.125rem] border-[#f1f5f9] hover:shadow-[0_20px_40px_-15px_rgba(13,148,136,0.1)] transition-all duration-500 group">
+      <div className="flex flex-row gap-[1.25rem] mb-[1.75rem]">
+        <div className="relative shrink-0">
+          <Image src={doctor.image} alt={name} width={88} height={88} className=" rounded-[1.75rem] object-cover bg-[#f8fafc]" loading="lazy" />
+          <div className={`absolute -bottom-[0.5rem] ${isRtl ? '-left-[0.5rem]' : '-right-[0.5rem]'} bg-[#ffffff] shadow-sm rounded-[0.75rem] px-[0.625rem] py-[0.375rem] flex items-center gap-[0.25rem]`}>
+            <Star size="0.875rem" className="fill-yellow-400 text-yellow-400" />
+            <span className="text-[0.75rem] font-[800]">4.9</span>
           </div>
         </div>
         
-        <div className="flex-1 pt-1">
-          <div className="flex items-center gap-2 mb-1">
-            <ShieldCheck size={16} className="text-medical-teal" />
-            <span className="text-[0.65rem] font-bold text-medical-teal uppercase tracking-wider">
-              {"Verified Plan"}
-            </span>
+        <div className="flex flex-col pt-[0.25rem]">
+          <div className="flex items-center gap-[0.5rem] mb-[0.375rem]">
+            <ShieldCheck size="1rem" className="text-medical-teal" />
+            <span className="text-[0.6875rem] font-[800] text-medical-teal uppercase tracking-widest">{t("insuranceVerified") || "Verified"}</span>
           </div>
-          <h3 className="font-black text-slate-800 text-lg leading-tight">{name}</h3>
-          <p className="text-slate-500 text-sm font-medium">{specialty}</p>
+          <h3 className="font-[900] text-[#134e4a] text-[1.125rem] leading-tight mb-[0.25rem]">{name}</h3>
+          <p className="text-[#64748b] text-[0.875rem] font-[600]">{specialty}</p>
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-row gap-[0.75rem]">
         {doctor.can_chat && (
-          <button className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-50 text-slate-600 font-bold text-sm hover:bg-slate-100 transition-colors">
-            <MessageCircle size={18} />
-            {t("chatNow")}
+          <button className="flex-1 flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-[#f8fafc] text-[#475569] font-[800] text-[0.875rem] cursor-pointer hover:bg-[#f1f5f9] transition-all">
+            <MessageCircle size="1.125rem" /> {t("chatNow")}
           </button>
         )}
-        
-        {doctor.can_reserve && (
-         <div className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors ${
-            doctor.can_chat ? 'bg-medical-teal text-white hover:bg-medical-teal/90' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-          }`}>
-            <Calendar size={18} />
-            {t("book")}
-            </div>
-          
-        )}
+        <button 
+          onClick={() => onBooking(doctor)}
+          className="flex-[1.5] flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-medical-teal text-[#ffffff] font-[800] text-[0.875rem] cursor-pointer hover:brightness-95 transition-all shadow-lg shadow-medical-teal/20"
+        >
+          <Calendar size="1.125rem" /> {t("book")}
+        </button>
       </div>
     </div>
   );

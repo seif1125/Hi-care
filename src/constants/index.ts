@@ -38,6 +38,16 @@ export const SOCIAL_LINKS = [
 
 export const CATEGORIES = [
   { id: "all", en: "All", ar: "الكل" },
-  { id: "Cardiology", en: "Cardiology", ar: "القلب" },
-  { id: "Ophthalmology", en: "Ophthalmology", ar: "الرمد" }
+  { id: "Cardiology", en: "Cardiology", ar: "أمراض القلب" },
+  { id: "Ophthalmology", en: "Ophthalmology", ar: "رمد / عيون" },
+  { id: "Pediatrics", en: "Pediatrics", ar: "طب الأطفال" },
+  { id: "Dermatology", en: "Dermatology", ar: "الجلدية" },
+  { id: "Orthopedics", en: "Orthopedics", ar: "عظام" },
+  { id: "Dentistry", en: "Dentistry", ar: "الأسنان" },
+  { id: "Psychiatry", en: "Psychiatry", ar: "الطب النفسي" },
+  { id: "Neurology", en: "Neurology", ar: "مخ وأعصاب" },
+  { id: "Gastroenterology", en: "Gastroenterology", ar: "باطنة / جهاز هضمي" },
+  { id: "Nutrition", en: "Nutrition", ar: "تغذية" },
+  { id: "General Medicine", en: "General Medicine", ar: "طب عام" },
 ];
+
