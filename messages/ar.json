@@ -103,6 +103,19 @@
     "bookingPlaceholder":"كيف يمكن للطبيب مساعدتك؟",
     "appointmentSuccess":"تم حجز موعدك بنجاح!"  
 },
+"Appointments": {
+    "myAppointments": "مواعيدي",
+    "backToDashboard": "العودة للوحة التحكم",
+    "totalBookings": "إجمالي الحجوزات",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "cancelAppointment": "إلغاء الموعد",
+    "confirmCancel": "هل أنت متأكد من رغبتك في إلغاء هذا الموعد؟",
+    "noAppointments": "لا توجد مواعيد حالياً",
+    "noAppointmentsDesc": "لم تقم بحجز أي استشارات بعد. ابحث عن طبيب للبدء.",
+    "bookNow": "احجز موعداً الآن",
+    "cancelSuccess": "تم إلغاء الموعد بنجاح"
+  },
   "Footer": {
     "developedWith": "تم التطوير بـ",
     "by": "بواسطة",
