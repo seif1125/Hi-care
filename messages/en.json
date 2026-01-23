@@ -104,7 +104,8 @@
     "date": "Date",
     "anonymous": "Anonymous",
     "notes": "Notes",
-    "bookingPlaceholder": "How can the doctor help you?"
+    "bookingPlaceholder": "How can the doctor help you?",
+    "appointmentSuccess": "Your appointment has been booked successfully!"
    
   },
   "Footer": {

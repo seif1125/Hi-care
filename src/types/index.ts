@@ -94,3 +94,7 @@ export interface ModalProps {
  onClose: () => void; 
   onReserve: (appointment: Appointment, withGoogle: boolean) => void
 }
+export interface ToastProps {
+  message: string;
+  onClose: () => void;
+}

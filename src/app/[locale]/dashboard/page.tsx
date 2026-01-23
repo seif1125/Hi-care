@@ -6,6 +6,7 @@ import { useAppointmentStore } from "@/store/useAppointmentsStore";
 import { Search, ChevronDown } from "lucide-react";
 import DoctorCard from "@/components/DoctorCard";
 import BookingModal from "@/components/BookingModal";
+import { SuccessToast } from "@/components/ToastMessage";
 import { CATEGORIES, ITEMS_PER_PAGE } from "@/constants";
 import { getDoctorsAction } from "@/actions/getDoctors";
 import { Doctor } from "@/types";
@@ -17,18 +18,16 @@ export default function DashboardPage() {
   const locale = useLocale();
   const t = useTranslations("Dashboard");
   
-  // Stores
   const { selectedInsuranceId } = useUserStore();
   const { addAppointment } = useAppointmentStore();
 
-  // State
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("all");
   const [selectedDr, setSelectedDr] = useState<Doctor | null>(null);
+  const [showSuccess, setShowSuccess] = useState(true);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
 
-  // Initial Fetch
   useEffect(() => {
     let isMounted = true;
     getDoctorsAction().then(data => {
@@ -37,12 +36,10 @@ export default function DashboardPage() {
     return () => { isMounted = false; };
   }, []);
 
-  // Reset pagination on filter change
   useEffect(() => {
     setDisplayLimit(ITEMS_PER_PAGE);
   }, [search, activeCat, selectedInsuranceId]);
 
-  // Derived Data
   const filteredDoctors = useMemo(() => 
     filterDoctors(doctors, search, activeCat, selectedInsuranceId?.toString(), locale),
   [doctors, search, activeCat, selectedInsuranceId, locale]);
@@ -51,38 +48,38 @@ export default function DashboardPage() {
     filteredDoctors.slice(0, displayLimit),
   [filteredDoctors, displayLimit]);
 
-  // Handlers
   const handleReserve = useCallback(async (appointmentData: any, withGoogle: boolean) => {
     try {
       await reserveAppointment(appointmentData, addAppointment, withGoogle);
       setSelectedDr(null);
+      setShowSuccess(true);
     } catch (error) {
       console.error("Reservation failed:", error);
     }
   }, [addAppointment]);
 
   return (
-    <main className="min-h-screen bg-slate-50 p-6 md:p-12">
-      <div className="max-w-7xl mx-auto flex flex-col gap-16">
+    <main className="min-h-screen bg-slate-50 p-[1.5rem] md:p-[3rem]">
+      <div className="max-w-[80rem] mx-auto flex flex-col gap-[4rem]">
         
         {/* Search & Categories */}
-        <section className="flex flex-col gap-8">
-          <div className="relative w-full max-w-xl">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size="1.5rem" />
+        <section className="flex flex-col gap-[2rem]">
+          <div className="relative w-full max-w-[36rem]">
+            <Search className="absolute left-[1.5rem] top-[50%] -translate-y-[50%] text-slate-400" size="1.5rem" />
             <input 
-              className="w-full bg-white border-none rounded-3xl pl-16 pr-6 py-5 text-lg font-medium shadow-sm focus:ring-2 focus:ring-teal-500/20 outline-none"
+              className="w-full bg-white border-none rounded-[1.5rem] pl-[4rem] pr-[1.5rem] py-[1.25rem] text-[1.125rem] font-medium shadow-sm focus:ring-2 focus:ring-teal-500/20 outline-none"
               placeholder={t("searchDoctor")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
+          <div className="flex items-center gap-[1rem] overflow-x-auto no-scrollbar pb-[0.5rem]">
             {CATEGORIES.map((cat) => (
               <button 
                 key={cat.id}
                 onClick={() => setActiveCat(cat.id)}
-                className={`px- py-3.5 rounded-2xl text-sm font-extrabold transition-all border-2 whitespace-nowrap ${
+                className={`px-[2rem] py-[0.875rem] rounded-[1rem] text-[0.875rem] font-[800] transition-all border-2 whitespace-nowrap ${
                   activeCat === cat.id 
                     ? "bg-medical-teal border-medical-teal text-white shadow-lg shadow-teal-500/30" 
                     : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
@@ -95,16 +92,16 @@ export default function DashboardPage() {
         </section>
 
         {/* Doctor List */}
-        <section className="flex flex-col gap-8">
+        <section className="flex flex-col gap-[2rem]">
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-black text-teal-900">{t('availableDoctors')}</h2>
-            <span className="bg-teal-50 text-medical-teal px-5 py-2 rounded-2xl font-extrabold text-sm">
+            <h2 className="text-[1.875rem] font-[900] text-teal-900 leading-[1.2]">{t('availableDoctors')}</h2>
+            <span className="bg-teal-50 text-medical-teal px-[1.25rem] py-[0.5rem] rounded-[1rem] font-[800] text-[0.875rem]">
               {t('showing')} {visibleDoctors.length} {t('of')} {filteredDoctors.length}
             </span>
           </div>
 
           {filteredDoctors.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[2.5rem]">
               {visibleDoctors.map((dr) => (
                 <DoctorCard 
                   key={dr.id} 
@@ -114,16 +111,16 @@ export default function DashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="py-24 bg-white rounded-[3rem] border-4 border-dashed border-slate-50 text-center text-slate-400 font-bold">
+            <div className="py-[6rem] bg-white rounded-[3rem] border-4 border-dashed border-slate-50 text-center text-slate-400 font-[700]">
               {t('noResults')}
             </div>
           )}
 
           {filteredDoctors.length > displayLimit && (
-            <div className="flex justify-center mt-8">
+            <div className="flex justify-center mt-[2rem]">
               <button 
                 onClick={() => setDisplayLimit(prev => prev + ITEMS_PER_PAGE)}
-                className="flex items-center gap-3 px-14 py-5 bg-white border-2 border-medical-teal text-medical-teal font-extrabold rounded-3xl hover:bg-medical-teal hover:text-white transition-all active:scale-95"
+                className="flex items-center gap-[0.75rem] px-[3.5rem] py-[1.25rem] bg-white border-2 border-medical-teal text-medical-teal font-[800] rounded-[1.5rem] cursor-pointer hover:bg-medical-teal hover:text-white transition-all active:scale-[0.95]"
               >
                 {t('showMore')}<ChevronDown size="1.25rem" />
               </button>
@@ -139,6 +136,12 @@ export default function DashboardPage() {
           onReserve={handleReserve} 
         />
       )}
+      {showSuccess && (
+      <SuccessToast 
+        message={t('appointmentSuccess')} 
+        onClose={() => setShowSuccess(false)} 
+      />
+    )}
     </main>
   );
 }
