@@ -108,6 +108,19 @@
     "appointmentSuccess": "Your appointment has been booked successfully!"
    
   },
+  "Appointments": {
+    "myAppointments": "My Appointments",
+    "backToDashboard": "Back to Dashboard",
+    "totalBookings": "Total Bookings",
+    "date": "Date",
+    "time": "Time",
+    "cancelAppointment": "Cancel Appointment",
+    "confirmCancel": "Are you sure you want to cancel this appointment?",
+    "noAppointments": "No appointments found",
+    "noAppointmentsDesc": "You haven't booked any consultations yet. Find a doctor to get started.",
+    "bookNow": "Book an Appointment",
+    "cancelSuccess": "Appointment cancelled successfully"
+  },
   "Footer": {
    "developedWith": "Developed with",
     "by": "by",
