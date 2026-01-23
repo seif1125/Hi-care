@@ -78,6 +78,7 @@
 "Dashboard": {
     "welcome": "Welcome, {name}",
     "searchPlaceholder": "Search for a doctor by name...",
+    "availableDoctors": "Available Doctors",
     "upcoming": "Upcoming Appointments",
     "categories": "Medical Specialties",
     "chatNow": "Instant Chat",
@@ -85,14 +86,26 @@
     "confirm": "Confirm Booking",
     "saveGoogle": "Book & Add to Google Calendar",
     "success": "Appointment booked successfully!",
+    "searchDoctor": "Search for a doctor...",
     "insuranceVerified": "Verified Plan",
     "selectTime": "Select Available Slot",
     "noResults": "No doctors found matching your criteria.",
     "confirmReservation": "Confirm Reservation",
     "reserveAndGoogle": "Reserve & Sync to Google",
     "resultsCount": "{count} Specialists",
-    "showingResults": "Showing",
-    "of": "of"  
+    "showing": "Showing",
+    "of": "of" ,
+    "showMore": "Show More",
+    "patientName": "Patient Name",
+    "emailAddress": "Email Address",
+    "insurance": "Insurance",
+    "doctor": "Doctor",
+    "specialty": "Specialty",
+    "date": "Date",
+    "anonymous": "Anonymous",
+    "notes": "Notes",
+    "bookingPlaceholder": "How can the doctor help you?"
+   
   },
   "Footer": {
    "developedWith": "Developed with",

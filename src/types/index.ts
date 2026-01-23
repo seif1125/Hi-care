@@ -87,7 +87,7 @@ export interface Appointment {
 
 export interface DoctorCardProps {
   doctor: Doctor;
-  onBooking: (doctor: Doctor) => void;
+  onBooking: (doctor:Doctor) => void;
 }
 export interface ModalProps {
  doctor: Doctor; 

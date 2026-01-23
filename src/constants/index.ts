@@ -50,4 +50,4 @@ export const CATEGORIES = [
   { id: "Nutrition", en: "Nutrition", ar: "تغذية" },
   { id: "General Medicine", en: "General Medicine", ar: "طب عام" },
 ];
-
+export const ITEMS_PER_PAGE = 12;

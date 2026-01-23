@@ -1,53 +1,76 @@
 "use client";
-import { Doctor, DoctorCardProps } from "@/types";
+
+import { memo, useMemo } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { MessageCircle, Calendar, ShieldCheck, Star } from "lucide-react";
-import Image from "next/image";
+import { DoctorCardProps } from "@/types";
 
-
-
-export default function DoctorCard({ doctor, onBooking }: DoctorCardProps) {
+const DoctorCard = memo(({ doctor, onBooking }: DoctorCardProps) => {
   const locale = useLocale();
   const t = useTranslations("Dashboard");
   const isRtl = locale === "ar";
 
+  // Memoize strings to avoid re-calculation on every render
   const name = isRtl ? doctor.name_ar : doctor.name_en;
   const specialty = isRtl ? doctor.specialty_ar : doctor.specialty_en;
 
+  // Optimize availability check: only calculate if doctor.availability changes
+  const hasAvailableSlots = useMemo(() => {
+    const now = new Date();
+    return doctor.availability.some((slot) => new Date(slot) >= now);
+  }, [doctor.availability]);
+
   return (
-    <div className="bg-[#ffffff] rounded-[2.5rem] p-[1.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] border-[0.125rem] border-[#f1f5f9] hover:shadow-[0_20px_40px_-15px_rgba(13,148,136,0.1)] transition-all duration-500 group">
-      <div className="flex flex-row gap-[1.25rem] mb-[1.75rem]">
+    <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border-2 border-slate-50 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-500 group">
+      <div className="flex flex-row gap-5 mb-7">
         <div className="relative shrink-0">
-          <Image src={doctor.image} alt={name} width={88} height={88} className=" rounded-[1.75rem] object-cover bg-[#f8fafc]" loading="lazy" />
-          <div className={`absolute -bottom-[0.5rem] ${isRtl ? '-left-[0.5rem]' : '-right-[0.5rem]'} bg-[#ffffff] shadow-sm rounded-[0.75rem] px-[0.625rem] py-[0.375rem] flex items-center gap-[0.25rem]`}>
+          <Image 
+            src={doctor.image} 
+            alt={name} 
+            width={88} 
+            height={88} 
+            className="rounded-[1.75rem] object-cover bg-slate-50" 
+            loading="lazy" 
+          />
+          <div className={`absolute -bottom-2 ${isRtl ? '-left-2' : '-right-2'} bg-white shadow-md rounded-xl px-2.5 py-1.5 flex items-center gap-1`}>
             <Star size="0.875rem" className="fill-yellow-400 text-yellow-400" />
-            <span className="text-[0.75rem] font-[800]">4.9</span>
+            <span className="text-xs font-black">4.9</span>
           </div>
         </div>
         
-        <div className="flex flex-col pt-[0.25rem]">
-          <div className="flex items-center gap-[0.5rem] mb-[0.375rem]">
+        <div className="flex flex-col pt-1">
+          <div className="flex items-center gap-2 mb-1.5">
             <ShieldCheck size="1rem" className="text-medical-teal" />
-            <span className="text-[0.6875rem] font-[800] text-medical-teal uppercase tracking-widest">{t("insuranceVerified") || "Verified"}</span>
+            <span className="text-[0.65rem] font-black text-medical-teal uppercase tracking-widest">
+              {t("insuranceVerified") || "Verified"}
+            </span>
           </div>
-          <h3 className="font-[900] text-[#134e4a] text-[1.125rem] leading-tight mb-[0.25rem]">{name}</h3>
-          <p className="text-[#64748b] text-[0.875rem] font-[600]">{specialty}</p>
+          <h3 className="font-black text-teal-900 text-lg leading-tight mb-1">{name}</h3>
+          <p className="text-slate-500 text-sm font-semibold">{specialty}</p>
         </div>
       </div>
 
-      <div className="flex flex-row gap-[0.75rem]">
+      <div className="flex flex-row gap-3">
         {doctor.can_chat && (
-          <button className="flex-1 flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-[#f8fafc] text-[#475569] font-[800] text-[0.875rem] cursor-pointer hover:bg-[#f1f5f9] transition-all">
+          <button className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-slate-50 text-slate-600 font-extrabold text-sm cursor-pointer hover:bg-slate-100 transition-all active:scale-95">
             <MessageCircle size="1.125rem" /> {t("chatNow")}
           </button>
         )}
-        <button 
-          onClick={() => onBooking(doctor)}
-          className="flex-[1.5] flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-medical-teal text-[#ffffff] font-[800] text-[0.875rem] cursor-pointer hover:brightness-95 transition-all shadow-lg shadow-medical-teal/20"
-        >
-          <Calendar size="1.125rem" /> {t("book")}
-        </button>
+        
+        {hasAvailableSlots && (
+          <button 
+            onClick={() => onBooking(doctor)}
+            className="flex-[1.5] flex items-center justify-center gap-2 py-4 rounded-2xl bg-medical-teal text-white font-extrabold text-sm cursor-pointer hover:brightness-95 transition-all shadow-lg shadow-teal-500/20 active:scale-95"
+          >
+            <Calendar size="1.125rem" /> {t("book")}
+          </button>
+        )}
       </div>
     </div>
   );
-}
+});
+
+DoctorCard.displayName = "DoctorCard";
+
+export default DoctorCard;
