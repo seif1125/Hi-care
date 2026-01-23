@@ -9,18 +9,17 @@ import { X, Calendar as CalIcon, Clock, Shield, User, Mail, MessageSquare } from
 // --- Sub-components ---
 
 const ReadOnlyField = memo(({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) => (
-  <div className="flex flex-col gap-1">
-    <span className="text-[0.7rem] font-extrabold text-slate-400 uppercase flex items-center gap-1.5">
+  <div className="flex flex-col gap-[0.25rem]">
+    <span className="text-[0.7rem] font-[800] text-[#94a3b8] uppercase flex items-center gap-[0.35rem]">
       {icon} {label}
     </span>
-    <p className="text-base font-bold text-slate-800 truncate">{value || "N/A"}</p>
+    <p className="text-[1rem] font-[700] text-[#1e293b] truncate">{value || "N/A"}</p>
   </div>
 ));
 ReadOnlyField.displayName = "ReadOnlyField";
 
-// Separated to prevent re-renders of the whole modal on text input
 const BookingSummary = memo(({ details, t, locale }: { details: any; t: any; locale: string }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-8 rounded-[2rem] border-2 border-slate-100">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.5rem] bg-[#f8fafc] p-[2rem] rounded-[2rem] border-[0.125rem] border-[#f1f5f9]">
     <ReadOnlyField icon={<User size="1rem"/>} label={t('patientName')} value={details.name} />
     <ReadOnlyField icon={<Mail size="1rem"/>} label={t('emailAddress')} value={details.email} />
     <ReadOnlyField icon={<Shield size="1rem"/>} label={t('insurance')} value={details.insurance} />
@@ -45,13 +44,11 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [comment, setComment] = useState("");
 
-  // Memoized doctor info
   const drInfo = useMemo(() => ({
     name: locale === "ar" ? doctor.name_ar : doctor.name_en,
     specialty: locale === "ar" ? doctor.specialty_ar : doctor.specialty_en
   }), [doctor, locale]);
 
-  // Filter valid slots (Current date/time and future only)
   const availableSlots = useMemo(() => {
     const now = new Date();
     return doctor.availability.filter(slot => new Date(slot) >= now);
@@ -75,27 +72,31 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
   }, [selectedSlot, doctor.id, drInfo, comment, onReserve, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-      <div className="bg-white w-full max-w-[45rem] max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-6 md:p-10 shadow-2xl relative">
+    <div className="fixed inset-[0] z-10000 flex items-center justify-center bg-[#134e4a]/60 backdrop-blur-[0.5rem] p-[1rem] animate-in fade-in duration-300">
+      <div className="bg-[#ffffff] w-full max-w-[45rem] max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-[2.5rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] relative">
         
-        <button onClick={onClose} aria-label="Close" className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-full transition-colors cursor-pointer">
-          <X size="1.5rem" className="text-slate-500" />
+        <button 
+          onClick={onClose} 
+          aria-label="Close" 
+          className="absolute top-[1.5rem] right-[1.5rem] p-[0.5rem] hover:bg-[#f1f5f9] rounded-full transition-colors cursor-pointer"
+        >
+          <X size="1.5rem" className="text-[#64748b]" />
         </button>
 
-        <h2 className="text-3xl font-black text-teal-900 mb-8 tracking-tight">{t("book")}</h2>
+        <h2 className="text-[1.75rem] font-[900] text-[#134e4a] mb-[2rem] tracking-tight">{t("book")}</h2>
 
         {/* Slot Selection */}
-        <div className="flex flex-col gap-4 mb-10">
-          <label className="text-xs font-extrabold text-slate-500 uppercase tracking-widest">{t('selectTime')}</label>
-          <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col gap-[1rem] mb-[2.5rem]">
+          <label className="text-[0.875rem] font-[800] text-[#64748b] uppercase tracking-wider">{t('selectTime')}</label>
+          <div className="flex flex-wrap gap-[0.75rem]">
             {availableSlots.map((slot) => (
               <button
                 key={slot}
                 onClick={() => setSelectedSlot(slot)}
-                className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all cursor-pointer border-2 ${
+                className={`px-[1.5rem] py-[0.75rem] rounded-[1rem] font-[700] text-[0.875rem] transition-all cursor-pointer border-2 ${
                   selectedSlot === slot 
-                  ? "bg-medical-teal border-medical-teal text-white shadow-lg shadow-teal-500/40" 
-                  : "bg-slate-50 border-slate-100 text-slate-600 hover:border-teal-200"
+                  ? "bg-medical-teal border-medical-teal text-[#ffffff] shadow-[0_8px_20px_-5px_rgba(13,148,136,0.4)]" 
+                  : "bg-[#f8fafc] border-[#f1f5f9] text-[#475569] hover:border-medical-teal/30"
                 }`}
               >
                 {new Date(slot).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' })}
@@ -106,7 +107,7 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
 
         {/* Dynamic Booking Details Section */}
         {selectedSlot && (
-          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="flex flex-col gap-[2rem] animate-in fade-in slide-in-from-bottom-[1rem] duration-500">
             
             <BookingSummary 
               t={t} 
@@ -121,30 +122,30 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
               }}
             />
 
-            <div className="flex flex-col gap-3">
-              <label className="text-sm font-extrabold text-slate-500 flex items-center gap-2">
+            <div className="flex flex-col gap-[0.75rem]">
+              <label className="text-[0.875rem] font-[800] text-[#64748b] flex items-center gap-[0.5rem]">
                 <MessageSquare size="1rem" /> {t('notes')}
               </label>
               <textarea 
-                className="w-full p-6 bg-white border-2 border-slate-100 rounded-2xl outline-none focus:ring-4 focus:ring-teal-500/10 focus:border-medical-teal transition-all min-h-[8rem] text-slate-700"
+                className="w-full p-[1.5rem] bg-[#ffffff] border-2 border-[#f1f5f9] rounded-[1.5rem] outline-none focus:ring-4 focus:ring-medical-teal/10 focus:border-medical-teal transition-all min-h-[8rem] text-[#1e293b]"
                 placeholder={t('bookingPlaceholder')} 
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-[1rem]">
               <button 
                 onClick={() => handleFinalize(false)} 
-                className="flex-1 bg-medical-teal text-white font-extrabold py-5 rounded-2xl cursor-pointer hover:brightness-90 transition-all shadow-lg shadow-teal-500/20 active:scale-[0.98]"
+                className="flex-1 bg-medical-teal text-[#ffffff] font-[800] py-[1.25rem] rounded-[1.5rem] cursor-pointer hover:brightness-[0.95] transition-all shadow-[0_10px_25px_-5px_rgba(13,148,136,0.3)] active:scale-[0.98]"
               >
                 {t('confirmReservation')}
               </button>
               <button 
                 onClick={() => handleFinalize(true)} 
-                className="flex-1 bg-white border-2 border-slate-200 text-slate-800 font-extrabold py-5 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
+                className="flex-1 bg-[#ffffff] border-2 border-[#e2e8f0] text-[#1e293b] font-[800] py-[1.25rem] rounded-[1.5rem] cursor-pointer hover:bg-[#f8fafc] transition-all flex items-center justify-center gap-[0.75rem] active:scale-[0.98]"
               >
-                <span className="text-google-red font-bold">G</span> {t("saveGoogle")}
+                <span className="text-[#ea4335] font-bold">G</span> {t("saveGoogle")}
               </button>
             </div>
           </div>

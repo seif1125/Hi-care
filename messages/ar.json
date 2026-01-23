@@ -100,7 +100,8 @@
     "anonymous": "مجهول",
     "anonymousEmail": "بريد مجهول",
     "notes": "ملاحظات",
-    "bookingPlaceholder":"كيف يمكن للطبيب مساعدتك؟"
+    "bookingPlaceholder":"كيف يمكن للطبيب مساعدتك؟",
+    "appointmentSuccess":"تم حجز موعدك بنجاح!"  
 },
   "Footer": {
     "developedWith": "تم التطوير بـ",
