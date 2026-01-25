@@ -78,9 +78,12 @@ export interface Doctor {
 export interface Appointment {
   id: string;
   doctorId: string;
-  doctorName: string;
+  doctorName_en: string;
+  doctorName_ar: string;
+  doctorImage: string;
   time: string;
-  specialty: string;
+  specialty_en: string;
+  specialty_ar: string;
   userComment: string;
   type: 'consultation' | 'follow-up'| 'emergency';
 }

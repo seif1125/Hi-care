@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("all");
   const [selectedDr, setSelectedDr] = useState<Doctor | null>(null);
-  const [showSuccess, setShowSuccess] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function DashboardPage() {
 
   const handleReserve = useCallback(async (appointmentData: any, withGoogle: boolean) => {
     try {
-      await reserveAppointment(appointmentData, addAppointment, withGoogle);
+      await reserveAppointment(appointmentData, addAppointment, withGoogle, locale);
       setSelectedDr(null);
       setShowSuccess(true);
     } catch (error) {
