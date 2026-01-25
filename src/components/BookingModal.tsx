@@ -44,10 +44,6 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [comment, setComment] = useState("");
 
-  const drInfo = useMemo(() => ({
-    name: locale === "ar" ? doctor.name_ar : doctor.name_en,
-    specialty: locale === "ar" ? doctor.specialty_ar : doctor.specialty_en
-  }), [doctor, locale]);
 
   const availableSlots = useMemo(() => {
     const now = new Date();
@@ -60,8 +56,11 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
     const appointment: Appointment = {
       id: crypto.randomUUID(),
       doctorId: doctor.id,
-      doctorName: drInfo.name,
-      specialty: drInfo.specialty,
+      doctorName_en: doctor.name_en,
+      doctorName_ar: doctor.name_ar,
+      specialty_en: doctor.specialty_en,
+      specialty_ar: doctor.specialty_ar,
+      doctorImage: doctor.image,
       time: selectedSlot,
       type: "consultation",
       userComment: comment,
@@ -69,7 +68,7 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
 
     onReserve(appointment, withGoogle);
     onClose();
-  }, [selectedSlot, doctor.id, drInfo, comment, onReserve, onClose]);
+  }, [selectedSlot, doctor.id, doctor, comment, onReserve, onClose]);
 
   return (
     <div className="fixed inset-[0] z-10000 flex items-center justify-center bg-[#134e4a]/60 backdrop-blur-[0.5rem] p-[1rem] animate-in fade-in duration-300">
@@ -116,8 +115,8 @@ export default function BookingModal({ doctor, onClose, onReserve }: ModalProps)
                 name: name || t('anonymous'),
                 email: email || t('anonymousEmail'),
                 insurance: selectedInsuranceId || t('noInsurance'),
-                drName: drInfo.name,
-                drSpecialty: drInfo.specialty,
+                drName: locale === "ar" ? doctor.name_ar : doctor.name_en,
+                drSpecialty: locale === "ar" ? doctor.specialty_ar : doctor.specialty_en,
                 slot: selectedSlot
               }}
             />

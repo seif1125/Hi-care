@@ -55,7 +55,7 @@ const DoctorCard = memo(({ doctor, onBooking }: DoctorCardProps) => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-row gap-[0.75rem]">
+      <div className="flex flex-col gap-[0.75rem]">
         {doctor.can_chat && (
           <button className="flex-1 flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-[#f8fafc] text-[#475569] font-[800] text-[0.875rem] cursor-pointer hover:bg-[#f1f5f9] transition-all active:scale-[0.95]">
             <MessageCircle size="1.125rem" /> {t("chatNow")}

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Calendar, Clock, User, Trash2, ArrowLeft, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { a } from "framer-motion/client";
 
 export default function AppointmentsPage() {
   const t = useTranslations("Appointments");
@@ -43,11 +44,20 @@ export default function AppointmentsPage() {
                 {/* Doctor & Specialty info */}
                 <div className="flex items-center gap-[1.5rem]">
                   <div className="w-[4.5rem] h-[4.5rem] bg-[#f8fafc] rounded-[1.25rem] flex items-center justify-center text-medical-teal">
-                    <User size="2rem" />
+                   {apt.doctorImage ?(
+                    <Image 
+                      src={apt.doctorImage} 
+                      alt={locale === "ar" ? apt.doctorName_ar : apt.doctorName_en}
+                      width={72}
+                      height={72}
+                      className="rounded-[1rem] object-cover"
+                      loading="lazy"
+                    />):( <User size="2.5rem" />)}
+
                   </div>
                   <div className="flex flex-col gap-[0.25rem]">
-                    <h3 className="text-[1.25rem] font-[900] text-[#134e4a]">{apt.doctorName}</h3>
-                    <p className="text-[#64748b] font-[600] text-[0.875rem]">{apt.specialty}</p>
+                    <h3 className="text-[1.25rem] font-[900] text-[#134e4a]">{locale === "ar" ? apt.doctorName_ar : apt.doctorName_en}</h3>
+                    <p className="text-[#64748b] font-[600] text-[0.875rem]">{locale === "ar" ? apt.specialty_ar : apt.specialty_en}</p>
                   </div>
                 </div>
 
@@ -58,8 +68,8 @@ export default function AppointmentsPage() {
                       <Calendar size="1.25rem" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[0.65rem] font-[800] text-[#94a3b8] uppercase">{t('date')}</span>
-                      <span className="text-[0.9375rem] font-[700] text-[#1e293b]">
+                      <span className="text-[0.5rem] font-[800] text-[#94a3b8] uppercase">{t('date')}</span>
+                      <span className="text-[0.75rem] font-[700] text-[#1e293b]">
                         {new Date(apt.time).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })}
                       </span>
                     </div>
@@ -70,8 +80,8 @@ export default function AppointmentsPage() {
                       <Clock size="1.25rem" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[0.65rem] font-[800] text-[#94a3b8] uppercase">{t('time')}</span>
-                      <span className="text-[0.9375rem] font-[700] text-[#1e293b]">
+                      <span className="text-[0.5rem] font-[800] text-[#94a3b8] uppercase">{t('time')}</span>
+                      <span className="text-[0.75rem] font-[700] text-[#1e293b]">
                         {new Date(apt.time).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -79,12 +89,12 @@ export default function AppointmentsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-end border-t-[0.125rem] md:border-none border-[#f1f5f9] pt-[1.5rem] md:pt-0">
+                <div className="flex items-center justify-end border-t-[0.125rem] md:border-none border-[#f1f5f9]">
                   <button 
                     onClick={() => {
                       if(confirm(t('confirmCancel'))) cancelAppointment(apt.id);
                     }}
-                    className="flex items-center gap-[0.5rem] text-[#ef4444] font-[800] text-[0.875rem] hover:bg-red-50 px-[1.25rem] py-[0.75rem] rounded-[1rem] transition-all cursor-pointer group"
+                    className="flex items-center gap-[0.5rem] text-[#ef4444] font-[800] text-[0.75rem] hover:bg-red-50 px-[1.25rem] py-[0.75rem] rounded-[1rem] transition-all cursor-pointer group"
                   >
                     <Trash2 size="1.125rem" className="group-hover:shake" />
                     {t('cancelAppointment')}
