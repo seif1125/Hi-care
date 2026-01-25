@@ -50,7 +50,7 @@ export default function DashboardPage() {
 
   const handleReserve = useCallback(async (appointmentData: any, withGoogle: boolean) => {
     try {
-      await reserveAppointment(appointmentData, addAppointment, withGoogle);
+      await reserveAppointment(appointmentData, addAppointment, withGoogle, locale);
       setSelectedDr(null);
       setShowSuccess(true);
     } catch (error) {
