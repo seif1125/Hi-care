@@ -6,20 +6,40 @@ import { useLocale } from "next-intl";
 import { getInsurancePrograms } from "@/actions/getInsurancePrograms";
 
 // Sub-components
-
 import PersonalInfoStep from "@/components/personalInfoStep";
 import InsurancesStep from "@/components/Insurances";
 import ConsentStep from "@/components/ConsentStep";
 import { InsuranceProgram } from "@/types";
-
+import { signupUser } from "@/actions/signupUser";
+import { useRouter } from "next/navigation";
 export default function SignupFlow() {
+  const router = useRouter()
   const locale = useLocale();
   const isRtl = locale === "ar";
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(1);
   const [programs, setPrograms] = useState<InsuranceProgram[]>([]);
-  const { name, email, selectedInsuranceId, hasConsented, setPersonalInfo, setInsurance, setConsent } = useUserStore();
+  const { name, email, selectedInsuranceId, hasConsented, setPersonalInfo, setInsurance, setConsent,setAuth } = useUserStore();
+const handleFinalSubmit = async () => {
+    try {
+      // 1. Call the Server Action
+      const result = await signupUser({
+        name,
+        email,
+        insuranceId: selectedInsuranceId
+      });
 
+      if (result.success) {
+        // 2. Save ID and Token to Zustand
+        setAuth(result.id, result.token);
+
+        // 3. Redirect to Dashboard
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
   useEffect(() => {
     async function load() {
       const data = await getInsurancePrograms();
@@ -72,7 +92,7 @@ export default function SignupFlow() {
               isRtl={isRtl} 
               onConsentChange={setConsent} 
               onBack={prevStep} 
-              onComplete={() => window.location.href = '/dashboard'}
+              onComplete={handleFinalSubmit}
             />
           )}
         </div>

@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { MessageCircle, Calendar, ShieldCheck, Star } from "lucide-react";
 import { DoctorCardProps } from "@/types";
 
-const DoctorCard = memo(({ doctor, onBooking }: DoctorCardProps) => {
+const DoctorCard = memo(({ doctor, onBooking, onChat }: DoctorCardProps) => {
   const locale = useLocale();
   const t = useTranslations("Dashboard");
   const isRtl = locale === "ar";
@@ -57,7 +57,7 @@ const DoctorCard = memo(({ doctor, onBooking }: DoctorCardProps) => {
       {/* Action Buttons */}
       <div className="flex flex-col gap-[0.75rem]">
         {doctor.can_chat && (
-          <button className="flex-1 flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-[#f8fafc] text-[#475569] font-[800] text-[0.875rem] cursor-pointer hover:bg-[#f1f5f9] transition-all active:scale-[0.95]">
+          <button onClick={()=>onChat(doctor)} className="flex-1 flex items-center justify-center gap-[0.5rem] py-[1rem] rounded-[1.25rem] bg-[#f8fafc] text-[#475569] font-[800] text-[0.875rem] cursor-pointer hover:bg-[#f1f5f9] transition-all active:scale-[0.95]">
             <MessageCircle size="1.125rem" /> {t("chatNow")}
           </button>
         )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, use } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { useAppointmentStore } from "@/store/useAppointmentsStore";
 import { Search, ChevronDown } from "lucide-react";
@@ -13,6 +13,7 @@ import { Doctor } from "@/types";
 import { reserveAppointment } from "@/actions/reserveAppointment";
 import { useLocale, useTranslations } from "next-intl";
 import { filterDoctors } from "@/utils/index";
+import ChatModal from "@/components/ChatModal";
 
 export default function DashboardPage() {
   const locale = useLocale();
@@ -20,14 +21,14 @@ export default function DashboardPage() {
   
   const { selectedInsuranceId } = useUserStore();
   const { addAppointment } = useAppointmentStore();
-
+ const [ChatModalOpen, setChatModalOpen] = useState(false);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("all");
   const [selectedDr, setSelectedDr] = useState<Doctor | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
-
+ console.log(useUserStore().id,'user id',useUserStore().token);
   useEffect(() => {
     let isMounted = true;
     getDoctorsAction().then(data => {
@@ -107,6 +108,7 @@ export default function DashboardPage() {
                   key={dr.id} 
                   doctor={dr} 
                   onBooking={setSelectedDr} 
+                 onChat={() => {setChatModalOpen(true); setSelectedDr(dr);console.log(dr);}}
                 />
               ))}
             </div>
@@ -142,6 +144,14 @@ export default function DashboardPage() {
         onClose={() => setShowSuccess(false)} 
       />
     )}
+
+    {ChatModalOpen && (
+      <ChatModal 
+        doctor={selectedDr}
+        onClose={() => setChatModalOpen(false)} 
+      />
+    )}
+
     </main>
   );
 }
