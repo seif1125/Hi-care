@@ -10,7 +10,7 @@ import PersonalInfoStep from "@/components/personalInfoStep";
 import InsurancesStep from "@/components/Insurances";
 import ConsentStep from "@/components/ConsentStep";
 import { InsuranceProgram } from "@/types";
-import { signupUser } from "@/actions/signupUser";
+import { signupPatient } from "@/actions/auth";
 import { useRouter } from "next/navigation";
 export default function SignupFlow() {
   const router = useRouter()
@@ -23,15 +23,15 @@ export default function SignupFlow() {
 const handleFinalSubmit = async () => {
     try {
       // 1. Call the Server Action
-      const result = await signupUser({
+      const result = await signupPatient({
         name,
         email,
         insuranceId: selectedInsuranceId
       });
 
-      if (result.success) {
+      if (result.success&& result.token&& result.id) {
         // 2. Save ID and Token to Zustand
-        setAuth(result.id, result.token);
+        setAuth(result.id, name, result.token);
 
         // 3. Redirect to Dashboard
         router.push('/dashboard');

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, use } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { useAppointmentStore } from "@/store/useAppointmentsStore";
 import { Search, ChevronDown } from "lucide-react";
@@ -21,14 +21,16 @@ export default function DashboardPage() {
   
   const { selectedInsuranceId } = useUserStore();
   const { addAppointment } = useAppointmentStore();
- const [ChatModalOpen, setChatModalOpen] = useState(false);
+
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("all");
   const [selectedDr, setSelectedDr] = useState<Doctor | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
- console.log(useUserStore().id,'user id',useUserStore().token);
+
   useEffect(() => {
     let isMounted = true;
     getDoctorsAction().then(data => {
@@ -52,23 +54,34 @@ export default function DashboardPage() {
   const handleReserve = useCallback(async (appointmentData: any, withGoogle: boolean) => {
     try {
       await reserveAppointment(appointmentData, addAppointment, withGoogle, locale);
+      setBookingModalOpen(false);
       setSelectedDr(null);
       setShowSuccess(true);
     } catch (error) {
       console.error("Reservation failed:", error);
     }
-  }, [addAppointment]);
+  }, [addAppointment, locale]);
+
+  const handleOpenChat = (dr: Doctor) => {
+    setSelectedDr(dr);
+    setChatModalOpen(true);
+  };
+
+  const handleOpenBooking = (dr: Doctor) => {
+    setSelectedDr(dr);
+    setBookingModalOpen(true);
+  };
 
   return (
     <main className="min-h-screen bg-slate-50 p-[1.5rem] md:p-[3rem]">
       <div className="max-w-[80rem] mx-auto flex flex-col gap-[4rem]">
         
-        {/* Search & Categories */}
+        {/* Search & Categories Section */}
         <section className="flex flex-col gap-[2rem]">
           <div className="relative w-full max-w-[36rem]">
             <Search className="absolute left-[1.5rem] top-[50%] -translate-y-[50%] text-slate-400" size="1.5rem" />
             <input 
-              className="w-full bg-white border-none rounded-[1.5rem] pl-[4rem] pr-[1.5rem] py-[1.25rem] text-[1.125rem] font-medium shadow-sm focus:ring-2 focus:ring-teal-500/20 outline-none"
+              className="w-full bg-white border-none rounded-[1.5rem] pl-[4rem] pr-[1.5rem] py-[1.25rem] text-[1.125rem] font-medium shadow-sm focus:ring-2 focus:ring-teal-500/20 outline-none transition-all"
               placeholder={t("searchDoctor")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -92,7 +105,7 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* Doctor List */}
+        {/* Doctor Grid Section */}
         <section className="flex flex-col gap-[2rem]">
           <div className="flex justify-between items-center">
             <h2 className="text-[1.875rem] font-[900] text-teal-900 leading-[1.2]">{t('availableDoctors')}</h2>
@@ -107,13 +120,13 @@ export default function DashboardPage() {
                 <DoctorCard 
                   key={dr.id} 
                   doctor={dr} 
-                  onBooking={setSelectedDr} 
-                 onChat={() => {setChatModalOpen(true); setSelectedDr(dr);console.log(dr);}}
+                  onBooking={() => handleOpenBooking(dr)} 
+                  onChat={() => handleOpenChat(dr)}
                 />
               ))}
             </div>
           ) : (
-            <div className="py-[6rem] bg-white rounded-[3rem] border-4 border-dashed border-slate-50 text-center text-slate-400 font-[700]">
+            <div className="py-[6rem] bg-white rounded-[3rem] border-4 border-dashed border-slate-100 text-center text-slate-400 font-[700]">
               {t('noResults')}
             </div>
           )}
@@ -122,7 +135,7 @@ export default function DashboardPage() {
             <div className="flex justify-center mt-[2rem]">
               <button 
                 onClick={() => setDisplayLimit(prev => prev + ITEMS_PER_PAGE)}
-                className="flex items-center gap-[0.75rem] px-[3.5rem] py-[1.25rem] bg-white border-2 border-medical-teal text-medical-teal font-[800] rounded-[1.5rem] cursor-pointer hover:bg-medical-teal hover:text-white transition-all active:scale-[0.95]"
+                className="flex items-center gap-[0.75rem] px-[3.5rem] py-[1.25rem] bg-white border-2 border-medical-teal text-medical-teal font-[800] rounded-[1.5rem] cursor-pointer hover:bg-medical-teal hover:text-white transition-all active:scale-[0.95] shadow-md"
               >
                 {t('showMore')}<ChevronDown size="1.25rem" />
               </button>
@@ -131,27 +144,28 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      {selectedDr && (
+      {/* Modals Rendering Logic */}
+      {selectedDr && bookingModalOpen && (
         <BookingModal  
           doctor={selectedDr}
-          onClose={() => setSelectedDr(null)} 
+          onClose={() => {setSelectedDr(null); setBookingModalOpen(false)}} 
           onReserve={handleReserve} 
         />
       )}
+
+      {chatModalOpen && selectedDr && (
+        <ChatModal 
+          doctor={selectedDr}
+          onClose={() => {setChatModalOpen(false); setSelectedDr(null);}} 
+        />
+      )}
+
       {showSuccess && (
-      <SuccessToast 
-        message={t('appointmentSuccess')} 
-        onClose={() => setShowSuccess(false)} 
-      />
-    )}
-
-    {ChatModalOpen && (
-      <ChatModal 
-        doctor={selectedDr}
-        onClose={() => setChatModalOpen(false)} 
-      />
-    )}
-
+        <SuccessToast 
+          message={t('appointmentSuccess')} 
+          onClose={() => setShowSuccess(false)} 
+        />
+      )}
     </main>
   );
 }
